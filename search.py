@@ -61,7 +61,7 @@ def breadth_first_graph_search(problem: hanoi_states.ProblemHanoi, display: bool
 
 def depth_first_graph_search(problem: hanoi_states.ProblemHanoi, display: bool = False):
     """
-    Resolución a la pregunta 7 del TP1.
+    Resolución a la pregunta 4 del TP1.
     Se implemente una búsqueda en profundidad tomando como base el algoritmo ya implementado
     en la función breadth_first_graph_search.
 
