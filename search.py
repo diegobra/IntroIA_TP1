@@ -98,3 +98,54 @@ def depth_first_graph_search(problem: hanoi_states.ProblemHanoi, display: bool =
                             if child.state not in explored and child not in frontier)
 
     return None
+
+
+def depth_limited_search(problem: hanoi_states.ProblemHanoi, depth: int):
+
+    reached = deque([])
+
+    def recursive_dls(node: tree_hanoi.NodeHanoi, problem2, depth2):
+
+        nonlocal reached
+
+        if depth2 == 0:
+            # Se chequea si en el final de esta rama alcanzó el objetivo
+            if problem.goal_test(node.state):
+                return node
+            else:
+                return 'cutoff'
+        else:
+            cutoff_occurred = False
+
+            for child in node.expand(problem2):
+                if child.state not in reached:
+
+                    # Se agrega el hijo actual al stack y se analiza recursivamente
+                    reached.append(child.state)
+                    result = recursive_dls(child, problem, depth2 - 1)
+
+                    # Se quita el hijo actual del stack para que pueda ser evaluado en otras ramas
+                    # y así buscar la solución óptima
+                    reached.pop()
+
+                    if result == 'cutoff':
+                        cutoff_occurred = True
+                    elif result is not None:
+                        return result
+
+            if cutoff_occurred:
+                return 'cutoff'
+
+        return None
+
+    # Se agrega el nodo principal porque es parte del camino hacia el final de la rama
+    reached.append(tree_hanoi.NodeHanoi(problem.initial))
+    return recursive_dls(tree_hanoi.NodeHanoi(problem.initial), problem, depth)
+
+def iterative_deepening_search(problem: hanoi_states.ProblemHanoi, display: bool = False, max_depth: int = 99999):
+
+
+    for depth in range(max_depth):
+        result = depth_limited_search(problem, depth)
+        if result != 'cutoff':
+            return result

@@ -5,7 +5,8 @@ from tree_hanoi import NodeHanoi
 from search import (  # Importa las funciones de búsqueda del módulo search
     breadth_first_tree_search,
     breadth_first_graph_search,
-    depth_first_graph_search
+    depth_first_graph_search,
+    depth_limited_search
 )
 
 def main():
@@ -36,6 +37,8 @@ def main():
 
     # Resuelve el problema utilizando búsqueda en profundidad, con memoria que recuerda caminos ya recorridos
     last_node = depth_first_graph_search(problem_hanoi, display=True)
+
+    #last_node = depth_limited_search(problem_hanoi, depth=2**len(initial_state.rods[0]) - 1)
 
     _, memory_peak = tracemalloc.get_traced_memory()
     memory_peak /= 1024*1024
