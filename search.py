@@ -1,7 +1,7 @@
 from collections import deque
 import tree_hanoi
 import hanoi_states
-
+import tracemalloc
 
 def breadth_first_tree_search(problem: hanoi_states.ProblemHanoi):
     """
@@ -61,7 +61,7 @@ def breadth_first_graph_search(problem: hanoi_states.ProblemHanoi, display: bool
 
 def depth_first_graph_search(problem: hanoi_states.ProblemHanoi, display: bool = False):
     """
-    Resolución a la pregunta 4 del TP1.
+    Diego Braga: Resolución a la pregunta 4 del TP1.
     Se implemente una búsqueda en profundidad tomando como base el algoritmo ya implementado
     en la función breadth_first_graph_search.
 
@@ -106,6 +106,10 @@ def depth_limited_search(problem: hanoi_states.ProblemHanoi, depth: int):
 
     def recursive_dls(node: tree_hanoi.NodeHanoi, problem2, depth2):
 
+        _, memory_peak = tracemalloc.get_traced_memory()
+        memory_peak /= 1024 * 1024
+        print(f"Maxima memoria ocupada: {round(memory_peak, 2)} [MB]", )
+
         nonlocal reached
 
         if depth2 == 0:
@@ -142,8 +146,8 @@ def depth_limited_search(problem: hanoi_states.ProblemHanoi, depth: int):
     reached.append(tree_hanoi.NodeHanoi(problem.initial))
     return recursive_dls(tree_hanoi.NodeHanoi(problem.initial), problem, depth)
 
-def iterative_deepening_search(problem: hanoi_states.ProblemHanoi, display: bool = False, max_depth: int = 99999):
 
+def iterative_deepening_search(problem: hanoi_states.ProblemHanoi, display: bool = False, max_depth: int = 99999):
 
     for depth in range(max_depth):
         result = depth_limited_search(problem, depth)

@@ -35,9 +35,10 @@ def main():
     # Resuelve el problema utilizando búsqueda en anchura, pero con memoria que recuerda caminos ya recorridos.
     #last_node = breadth_first_graph_search(problem_hanoi, display=True)
 
-    # Resuelve el problema utilizando búsqueda en profundidad, con memoria que recuerda caminos ya recorridos
+    # Diego Braga: Resuelve el problema utilizando búsqueda en profundidad, con memoria que recuerda caminos ya recorridos
     last_node = depth_first_graph_search(problem_hanoi, display=True)
 
+    # Diego Braga: Algoritmo de búsqueda en profundidad limitada (experimental)
     #last_node = depth_limited_search(problem_hanoi, depth=2**len(initial_state.rods[0]) - 1)
 
     _, memory_peak = tracemalloc.get_traced_memory()
